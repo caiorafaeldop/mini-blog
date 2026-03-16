@@ -1,0 +1,24 @@
+<p-dialog header="Login ou Cadastro" [(visible)]="display" [modal]="true" [style]="{width: '350px'}" [draggable]="false" [resizable]="false">
+    <div class="flex flex-column gap-3 mt-3">
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
+            <input type="text" pInputText placeholder="E-mail" [(ngModel)]="email">
+        </div>
+        
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
+            <input type="password" pInputText placeholder="Senha" [(ngModel)]="senha">
+        </div>
+
+        <p-messages *ngIf="erroMsg" severity="error">
+            <ng-template pTemplate>
+                <div class="ml-2">{{erroMsg}}</div>
+            </ng-template>
+        </p-messages>
+
+        <div class="flex flex-row justify-content-between mt-3">
+            <p-button label="Cadastrar-se" styleClass="p-button-outlined p-button-secondary" (onClick)="cadastrar()"></p-button>
+            <p-button label="Entrar" icon="pi pi-check" (onClick)="logar()"></p-button>
+        </div>
+    </div>
+</p-dialog>

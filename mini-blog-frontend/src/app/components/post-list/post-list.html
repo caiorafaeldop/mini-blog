@@ -1,0 +1,49 @@
+<div class="card p-4 shadow-2 surface-card border-round">
+    <div class="flex justify-content-between align-items-center mb-4">
+        <h1>Mini Blog</h1>
+        <div *ngIf="usuarioLogado; else btnLogin">
+            <span class="mr-3 text-secondary">Olá, {{usuarioLogado.email}}</span>
+            <p-button label="Sair" icon="pi pi-sign-out" styleClass="p-button-danger p-button-sm" (onClick)="logout()"></p-button>
+        </div>
+        <ng-template #btnLogin>
+            <p-button label="Logar / Comentar" icon="pi pi-user" (onClick)="mostrarLogin()"></p-button>
+        </ng-template>
+    </div>
+
+    <!-- CRIAR POST (se logado) -->
+    <div *ngIf="usuarioLogado" class="mb-5 surface-100 p-3 border-round">
+        <h3>Escreva algo...</h3>
+        <textarea rows="3" pInputTextarea [(ngModel)]="novoConteudo" class="w-full mb-2" autoResize="autoResize" style="resize: none;"></textarea>
+        <div class="flex justify-content-end">
+            <p-button label="Publicar" icon="pi pi-send" [disabled]="!novoConteudo.trim()" (onClick)="publicarPost()"></p-button>
+        </div>
+    </div>
+
+    <!-- LISTA DE POSTS -->
+    <div class="flex flex-column gap-3">
+        <p-messages *ngIf="posts.length === 0" severity="info">
+            <ng-template pTemplate>
+                <div class="ml-2">Nenhum post no momento. Seja o primeiro!</div>
+            </ng-template>
+        </p-messages>
+
+        <p-card *ngFor="let post of posts" styleClass="shadow-1">
+            <ng-template pTemplate="title">
+                <div class="flex align-items-center gap-2 text-primary text-lg">
+                    <i class="pi pi-user"></i>
+                    {{post.autor.email}}
+                </div>
+            </ng-template>
+            <ng-template pTemplate="subtitle">
+                <span class="text-xs text-500">{{post.dataCriacao | date:'dd/MM/yyyy HH:mm'}}</span>
+            </ng-template>
+            <ng-template pTemplate="content">
+                <p class="m-0 line-height-3 text-700">
+                    {{post.conteudo}}
+                </p>
+            </ng-template>
+        </p-card>
+    </div>
+</div>
+
+<app-login-modal #loginModal (loginSucesso)="onLoginSucesso($event)"></app-login-modal>
