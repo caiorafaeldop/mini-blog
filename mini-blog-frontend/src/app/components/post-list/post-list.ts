@@ -2,17 +2,18 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService, Post, Usuario } from '../../services/api.service';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { MessagesModule } from 'primeng/messages';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FormsModule } from '@angular/forms';
 import { LoginModalComponent } from '../login-modal/login-modal';
 import { MessageService } from 'primeng/api';
+import { PostItemComponent } from '../post-item/post-item.component';
 
 @Component({
   selector: 'app-post-list',
   standalone: true,
-  imports: [CommonModule, ButtonModule, CardModule, MessagesModule, InputTextareaModule, FormsModule, LoginModalComponent],
+  // Removi coisas que fomos pro post-item, e coloquei o próprio post-item nos imports:
+  imports: [CommonModule, ButtonModule, MessagesModule, InputTextareaModule, FormsModule, LoginModalComponent, PostItemComponent],
   templateUrl: './post-list.html',
   styleUrls: ['./post-list.scss']
 })
@@ -75,5 +76,15 @@ export class PostListComponent implements OnInit {
       },
       error: (e) => this.msgs.add({severity:'error', summary:'Erro', detail:'Não foi possível publicar.'})
     });
+  }
+
+  // O <app-post-item> vai avisar a gente que alguém curtiu o post. 
+  // Nós escutamos aquele Output e fazemos alguma coisa na nossa lista mestra!
+  onCurtirPost(postFoiCurtido: Post) {
+    if(!this.usuarioLogado) {
+       this.msgs.add({severity:'warn', summary:'Ops', detail:'Você precisa estar logado para curtir!'});
+       return;
+    }
+    this.msgs.add({severity:'info', summary:'Curtida', detail:`Você curtiu o post de ${postFoiCurtido.autor.email}!`});
   }
 }

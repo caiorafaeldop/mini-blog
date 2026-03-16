@@ -27,22 +27,17 @@
             </ng-template>
         </p-messages>
 
-        <p-card *ngFor="let post of posts" styleClass="shadow-1">
-            <ng-template pTemplate="title">
-                <div class="flex align-items-center gap-2 text-primary text-lg">
-                    <i class="pi pi-user"></i>
-                    {{post.autor.email}}
-                </div>
-            </ng-template>
-            <ng-template pTemplate="subtitle">
-                <span class="text-xs text-500">{{post.dataCriacao | date:'dd/MM/yyyy HH:mm'}}</span>
-            </ng-template>
-            <ng-template pTemplate="content">
-                <p class="m-0 line-height-3 text-700">
-                    {{post.conteudo}}
-                </p>
-            </ng-template>
-        </p-card>
+        <!-- 
+          Agora que criamos o componente, vamos usá-lo!
+          *ngFor -> Repete esse componente para cada post
+          [post]="post" -> Manda a variável 'post' do lado direito pelo @Input do lado esquerdo
+          (curtir)="onCurtirPost($event)" -> Escuta o $event (que é o Post clicado) do @Output 
+        -->
+        <app-post-item 
+            *ngFor="let post of posts" 
+            [post]="post" 
+            (curtir)="onCurtirPost($event)">
+        </app-post-item>
     </div>
 </div>
 

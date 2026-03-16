@@ -1,0 +1,27 @@
+<!-- Aqui mantemos a mesma estrutura que estava na lista, mas com a adição do botão curtir -->
+<p-card appHighlight styleClass="shadow-1">
+    <ng-template pTemplate="title">
+        <div class="flex align-items-center justify-content-between gap-2 text-primary text-lg">
+            <div>
+                <i class="pi pi-user mr-2"></i>
+                {{post.autor.email}}
+            </div>
+            <!-- Esse botão avisa o componente Pai de que ele foi clicado -->
+            <p-button icon="pi pi-heart" 
+                      styleClass="p-button-rounded p-button-text p-button-danger" 
+                      (onClick)="onCurtirClick()">
+            </p-button>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="subtitle">
+        <span class="text-xs text-500">{{post.dataCriacao | date:'dd/MM/yyyy HH:mm'}}</span>
+    </ng-template>
+
+    <ng-template pTemplate="content">
+        <p class="m-0 line-height-3 text-700">
+            <!-- Usando o pipe que criamos no Passo 1! -->
+            {{post.conteudo | resumo:100}}
+        </p>
+    </ng-template>
+</p-card>
