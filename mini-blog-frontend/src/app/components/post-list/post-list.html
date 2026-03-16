@@ -13,7 +13,7 @@
     <!-- CRIAR POST (se logado) -->
     <div *ngIf="usuarioLogado" class="mb-5 surface-100 p-3 border-round">
         <h3>Escreva algo...</h3>
-        <textarea rows="3" pInputTextarea [(ngModel)]="novoConteudo" class="w-full mb-2" autoResize="autoResize" style="resize: none;"></textarea>
+        <textarea rows="3" pInputTextarea [(ngModel)]="novoConteudo" class="w-full mb-2" [autoResize]="true" style="resize: none;"></textarea>
         <div class="flex justify-content-end">
             <p-button label="Publicar" icon="pi pi-send" [disabled]="!novoConteudo.trim()" (onClick)="publicarPost()"></p-button>
         </div>
